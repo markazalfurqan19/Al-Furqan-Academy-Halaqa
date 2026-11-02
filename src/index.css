@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+/* =========================================================================
+   ENHANCED PRINT & PDF GENERATION STYLESHEET
+   Supports A4 portrait/landscape, certificate borders, high-res emblems,
+   student transcripts, gate passes, exam sheets, and financial receipts
+   ========================================================================= */
+
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide application chrome, navbar, modal backdrops, and action buttons */
+  nav,
+  header,
+  footer,
+  .no-print,
+  button,
+  .btn-print,
+  .portal-nav-bar,
+  aside {
+    display: none !important;
+  }
+
+  /* Reset modal overlays for clean paper printing */
+  .fixed.inset-0 {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Target printable sheets */
+  .printable-card,
+  .printable-document,
+  .printable-certificate,
+  .printable-id-pass,
+  .printable-receipt,
+  .printable-exam {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Preserve color fidelity for emblems, badges, borders */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  @page {
+    margin: 8mm;
+    size: auto;
+  }
+
+  @page landscape-cert {
+    size: A4 landscape;
+    margin: 6mm;
+  }
+
+  .landscape-page {
+    page: landscape-cert;
+  }
+}

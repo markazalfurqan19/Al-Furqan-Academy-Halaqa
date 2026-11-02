@@ -1,0 +1,181 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Enrolled Quran student in Markazul Furqan Academy",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["MALE", "FEMALE"] },
+        "track": { "type": "string" },
+        "currentSurah": { "type": "string" },
+        "juzLevel": { "type": "number" },
+        "dailyAttendance": { "type": "number" },
+        "guardianName": { "type": "string" },
+        "guardianPhone": { "type": "string" },
+        "guardianEmail": { "type": "string" },
+        "enrollmentDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "KHATM_TRACK", "GRADUATED", "REVISION", "ON_LEAVE"] },
+        "bloodGroup": { "type": "string" },
+        "halaqahGroup": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "code", "name", "gender", "track", "status"]
+    },
+    "HifzLog": {
+      "title": "HifzLog",
+      "description": "Daily Sabaq, Sabqi, and Manzil evaluation record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentCode": { "type": "string" },
+        "date": { "type": "string" },
+        "sabaqRange": { "type": "string" },
+        "sabqiJuz": { "type": "number" },
+        "manzilJuz": { "type": "number" },
+        "grade": { "type": "string", "enum": ["MUMTAZ", "JAYYID_JIDDAN", "JAYYID", "MAQBOOL", "DAEFE"] },
+        "muallimName": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "studentId", "studentName", "date", "sabaqRange", "grade"]
+    },
+    "ExamRecord": {
+      "title": "ExamRecord",
+      "description": "Oral examination rubric and score record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentCode": { "type": "string" },
+        "examDate": { "type": "string" },
+        "juzTested": { "type": "string" },
+        "hifzScore": { "type": "number" },
+        "makharijScore": { "type": "number" },
+        "tajweedScore": { "type": "number" },
+        "totalScore": { "type": "number" },
+        "grade": { "type": "string" },
+        "examinerName": { "type": "string" },
+        "remarks": { "type": "string" }
+      },
+      "required": ["id", "studentId", "studentName", "examDate", "totalScore"]
+    },
+    "TuitionRecord": {
+      "title": "TuitionRecord",
+      "description": "Monthly tuition and kafalat payment record in Ethiopian Birr",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentCode": { "type": "string" },
+        "guardianName": { "type": "string" },
+        "guardianPhone": { "type": "string" },
+        "month": { "type": "string" },
+        "amountETB": { "type": "number" },
+        "status": { "type": "string", "enum": ["PAID", "PENDING", "OVERDUE", "SPONSORED"] },
+        "paymentMethod": { "type": "string" },
+        "sponsorName": { "type": "string" },
+        "receiptNumber": { "type": "string" },
+        "paidDate": { "type": "string" }
+      },
+      "required": ["id", "studentId", "studentName", "month", "amountETB", "status"]
+    },
+    "AdmissionApplication": {
+      "title": "AdmissionApplication",
+      "description": "Public admission application form for Markazul Furqan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "gender": { "type": "string", "enum": ["MALE", "FEMALE"] },
+        "age": { "type": "number" },
+        "guardianName": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "track": { "type": "string" },
+        "priorJuz": { "type": "number" },
+        "paymentChannel": { "type": "string" },
+        "submissionDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "fullName", "gender", "guardianName", "phone", "status"]
+    },
+    "DonationPledge": {
+      "title": "DonationPledge",
+      "description": "Vision 2030 development donation pledge",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "donorName": { "type": "string" },
+        "phoneOrEmail": { "type": "string" },
+        "amountETB": { "type": "number" },
+        "tier": { "type": "string" },
+        "channel": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "date": { "type": "string" },
+        "purpose": { "type": "string" }
+      },
+      "required": ["id", "donorName", "amountETB", "tier", "channel"]
+    },
+    "InstitutionSettings": {
+      "title": "InstitutionSettings",
+      "description": "Academy institution parameters, Ethiopian bank details, and contacts",
+      "type": "object",
+      "properties": {
+        "nameEn": { "type": "string" },
+        "nameAr": { "type": "string" },
+        "locationEn": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsappUrl": { "type": "string" },
+        "telegramUrl": { "type": "string" },
+        "youtubeUrl": { "type": "string" },
+        "tiktokUrl": { "type": "string" },
+        "cbeAccount": { "type": "string" },
+        "awashAccount": { "type": "string" },
+        "telebirrAccount": { "type": "string" },
+        "tuitionFeeETB": { "type": "number" },
+        "vision2030TargetETB": { "type": "number" },
+        "chiefExaminer": { "type": "string" },
+        "headOfHalaqat": { "type": "string" }
+      },
+      "required": ["nameEn", "nameAr", "phone", "cbeAccount"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Roster of enrolled students in Markazul Furqan Academy"
+    },
+    "/hifz_logs/{logId}": {
+      "schema": "HifzLog",
+      "description": "Daily Quran recitation and memorization evaluation logs"
+    },
+    "/exams/{examId}": {
+      "schema": "ExamRecord",
+      "description": "Quarterly and milestone oral exams records"
+    },
+    "/tuition/{tuitionId}": {
+      "schema": "TuitionRecord",
+      "description": "Tuition and Kafalat fee records"
+    },
+    "/admissions/{admissionId}": {
+      "schema": "AdmissionApplication",
+      "description": "Public admission applications"
+    },
+    "/pledges/{pledgeId}": {
+      "schema": "DonationPledge",
+      "description": "Vision 2030 Sadaqah and infrastructure pledges"
+    },
+    "/settings/{settingId}": {
+      "schema": "InstitutionSettings",
+      "description": "Official institutional configurations and bank payment channels"
+    }
+  }
+}

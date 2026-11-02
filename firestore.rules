@@ -1,0 +1,132 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Entity validation helpers
+    function isValidStudent(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.code is string && data.code.size() > 0 && data.code.size() <= 64 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 128 &&
+             data.track is string && data.track.size() <= 128 &&
+             data.status is string && data.status.size() <= 32;
+    }
+
+    function isValidHifzLog(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.studentId is string && data.studentId.size() <= 64 &&
+             data.studentName is string && data.studentName.size() <= 128 &&
+             data.date is string && data.date.size() <= 32 &&
+             data.sabaqRange is string && data.sabaqRange.size() <= 128 &&
+             data.grade is string && data.grade.size() <= 32;
+    }
+
+    function isValidExam(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.studentId is string && data.studentId.size() <= 64 &&
+             data.studentName is string && data.studentName.size() <= 128 &&
+             data.totalScore is number;
+    }
+
+    function isValidTuition(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.studentId is string && data.studentId.size() <= 64 &&
+             data.studentName is string && data.studentName.size() <= 128 &&
+             data.month is string && data.month.size() <= 64 &&
+             data.amountETB is number &&
+             data.status is string && data.status.size() <= 32;
+    }
+
+    function isValidAdmission(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.fullName is string && data.fullName.size() > 0 && data.fullName.size() <= 128 &&
+             data.guardianName is string && data.guardianName.size() <= 128 &&
+             data.phone is string && data.phone.size() <= 64 &&
+             data.status is string && data.status.size() <= 32;
+    }
+
+    function isValidPledge(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 64 &&
+             data.donorName is string && data.donorName.size() > 0 && data.donorName.size() <= 128 &&
+             data.amountETB is number &&
+             data.tier is string && data.tier.size() <= 64 &&
+             data.channel is string && data.channel.size() <= 64;
+    }
+
+    function isValidSettings(data) {
+      return data.nameEn is string && data.nameEn.size() <= 128 &&
+             data.phone is string && data.phone.size() <= 64 &&
+             data.cbeAccount is string && data.cbeAccount.size() <= 64;
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Students collection
+    match /students/{studentId} {
+      allow read: if true;
+      allow create, update: if isValidId(studentId) && isValidStudent(incoming());
+      allow delete: if isValidId(studentId);
+    }
+
+    // Hifz Logs
+    match /hifz_logs/{logId} {
+      allow read: if true;
+      allow create, update: if isValidId(logId) && isValidHifzLog(incoming());
+      allow delete: if isValidId(logId);
+    }
+
+    // Oral Exams
+    match /exams/{examId} {
+      allow read: if true;
+      allow create, update: if isValidId(examId) && isValidExam(incoming());
+      allow delete: if isValidId(examId);
+    }
+
+    // Tuition & Kafalat Records
+    match /tuition/{tuitionId} {
+      allow read: if true;
+      allow create, update: if isValidId(tuitionId) && isValidTuition(incoming());
+      allow delete: if isValidId(tuitionId);
+    }
+
+    // Public Admission Applications
+    match /admissions/{admissionId} {
+      allow read: if true;
+      allow create: if isValidId(admissionId) && isValidAdmission(incoming());
+      allow update, delete: if isValidId(admissionId) && isValidAdmission(incoming());
+    }
+
+    // Donation Pledges
+    match /pledges/{pledgeId} {
+      allow read: if true;
+      allow create: if isValidId(pledgeId) && isValidPledge(incoming());
+      allow update, delete: if isValidId(pledgeId);
+    }
+
+    // Institution Settings
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update: if isValidId(settingId) && isValidSettings(incoming());
+      allow delete: if false;
+    }
+  }
+}

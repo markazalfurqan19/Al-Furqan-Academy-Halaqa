@@ -1,0 +1,8 @@
+{
+  "name": "Al-Furqan Academy \u0026 Halaqa",
+  "description": "Comprehensive institutional academic portal for Markazul Furqan Quranic Academy with student rosters, Sabaq evaluations, oral exams, tuition ledger, and direct Google Sheets sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
