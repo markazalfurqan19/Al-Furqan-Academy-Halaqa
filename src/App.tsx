@@ -44,6 +44,7 @@ import { AdminSettingsModal } from './components/portal/AdminSettingsModal';
 import { FreeTierPublishModal } from './components/portal/FreeTierPublishModal';
 import { Toast } from './components/Toast';
 import { downloadCsv } from './utils/shareUtils';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   // Local storage keys
@@ -612,6 +613,9 @@ export default function App() {
         message={toastMessage}
         onClose={() => setToastMessage(null)}
       />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
 
     </div>
   );
